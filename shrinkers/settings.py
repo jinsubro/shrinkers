@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "shortener.apps.ShortenerConfig"
+    "shortener.apps.ShortenerConfig",
+    "debug_toolbar",    # Django Debug Toolbar
+]
+
+INTERNAL_IPS = [
+    "127.0.0.1"
 ]
 
 MIDDLEWARE = [
@@ -48,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # Django Debug Toolbar
 ]
 
 ROOT_URLCONF = 'shrinkers.urls'

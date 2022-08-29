@@ -5,14 +5,18 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 # Create your views here.
-def index(request):
-    user = Users.objects.filter(username="admin").first()
-    email = user.email if user else "Anonymous User!"
-    return render(request, "base.html", {"welcome_msg": f"Hello {email}", "hello": "world"})
 
-# def redirect_test(requests):
-#     print("Go Redirect")
-#     return redirect("index")
+
+def index(request):
+    print(request.user.pay_plan.name)
+    user = Users.objects.filter(id=request.user.id).first()
+    email = user.email if user else "Anonymous User!"
+    print("Logged in?", request.user.is_authenticated)
+    if request.user.is_authenticated is False:
+        email = "Anonymous User!"
+    print(email)
+    return render(request, "base.html", {"welcome_msg": "Hello FastCampus!"})
+
 
 @csrf_exempt
 def get_user(request, user_id):
@@ -26,5 +30,5 @@ def get_user(request, user_id):
         username = request.GET.get("username")
         if username:
             user = Users.objects.filter(pk=user_id).update(username=username)
-            
-        return JsonResponse(status=201, data=dict(msg="You just reached with Post Method!"))
+
+        return JsonResponse(dict(msg="You just reached with Post Method!"))
